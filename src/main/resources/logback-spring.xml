@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--从application.propertis获取日志保存的路径 -->
+    <springProperty scope="context" name="LOG_PATH" source="logback.path"/>
+    <appender name="All_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>logback.log</File>
+        <param name="Encoding" value="UTF-8"/>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logback-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <maxFileSize>500MB</maxFileSize>
+            <!---单位是根据pattern时间的最小单位-->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%msg%n
+                </Pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="All_FILE"/>
+    </root>
+    <logger name="org.springframework.boot" level="ERROR"/>
+    <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR" />
+</configuration>

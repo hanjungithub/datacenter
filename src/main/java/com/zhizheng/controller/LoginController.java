@@ -15,7 +15,7 @@ public class LoginController {
     @RequestMapping("/login")
     public ModelAndView login(String username,String password){
         UsernamePasswordToken passwordToken = new UsernamePasswordToken(username,
-                password, false);
+                password, true);
         Subject subject = SecurityUtils.getSubject();
         subject.login(passwordToken);
         ModelAndView modelAndView = new ModelAndView("test");
